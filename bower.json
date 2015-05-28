@@ -1,0 +1,22 @@
+{
+  "name": "filemanager",
+  "version": "0.0.0",
+  "authors": [
+    "Bernhard Wendel <BWendel@gmx.de>"
+  ],
+  "description": "A remote file manager for the browser",
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ]
+}
