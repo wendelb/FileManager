@@ -1,0 +1,13 @@
+{
+    "ignore": [
+        ".git",
+        "node_modules/**/node_modules",
+        "views",
+        "public",
+        "Gruntfile.js"
+    ],
+    "env": {
+        "PORT": 3000,
+        "DEBUG": "FileManager,FileManager:*"
+    }
+}
