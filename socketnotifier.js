@@ -12,33 +12,35 @@ function notifier(io) {
     io.on('connection', function (socket) {
         debug('A Client connected');
 
-        // Run the init process
-        var folders = watchdog.list();
+        socket.on('init', function () {
+            // Run the init process
+            var folders = watchdog.list();
 
-        for (var i in folders) {
-            if (folders.hasOwnProperty(i)) {
-                watchdog.getBaseFileInfo(folders[i], function (err, result) {
-                    socket.emit('folder:new', result);
+            for (var i in folders) {
+                if (folders.hasOwnProperty(i)) {
+                    watchdog.getBaseFileInfo(folders[i], function (err, result) {
+                        socket.emit('folder:new', result);
 
-                    // Now iterate over all the files and send them, too.
-                    // Start by reading the directory
-                    var files = fs.readdirSync(folders[i]);
+                        // Now iterate over all the files and send them, too.
+                        // Start by reading the directory
+                        var files = fs.readdirSync(folders[i]);
 
-                    // Now iterate over all entries
-                    for (var x = 0; x < files.length; x++) {
+                        // Now iterate over all entries
+                        for (var x = 0; x < files.length; x++) {
 
-                        // Is this a file or a folder?
-                        var data = fs.statSync(path.join(folders[i], files[x]));
-                        if (!data.isDirectory()) {
-                            // and send!
-                            watchdog.getFileInfo(path.join(folders[i], files[x]), function (err, result2) {
-                                socket.emit("file:new", result2);
-                            });
+                            // Is this a file or a folder?
+                            var data = fs.statSync(path.join(folders[i], files[x]));
+                            if (!data.isDirectory()) {
+                                // and send!
+                                watchdog.getFileInfo(path.join(folders[i], files[x]), function (err, result2) {
+                                    socket.emit("file:new", result2);
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
-        }
+        });
 
         socket.on('disconnect', function () {
             debug("A Client disconnected");
