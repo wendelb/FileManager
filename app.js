@@ -6,8 +6,10 @@ var http = require("http"),
 // var favicon = require('serve-favicon'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
+    multer = require("multer"),
     sio = require('socket.io'),
     routes = require('./routes/index'),
+    uploadHandler = require('./routes/upload'),
     socketNotifier = require("./socketnotifier"),
 
     app = express();
@@ -19,11 +21,14 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 // app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.raw({ limit: '50mb' }));
+app.use(multer({ dest: './uploads/' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+app.post('/upload', uploadHandler);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
