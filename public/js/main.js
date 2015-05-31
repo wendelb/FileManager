@@ -68,7 +68,7 @@ angular.module('filemanager', ['angular-humanize'])
             .on('dragleave', function (e) {
                 droptimer = setTimeout(function () {
                     dropzone.hide();
-                }, 500);
+                }, 2000);
             });
 
             element.find("td > table .upload-zone > td").filedrop()
