@@ -35,6 +35,7 @@ Watcher.prototype.getFileInfo = function (fullpath, cb) {
     var result = {};
     result.fullpath = fullpath;
     result.relpath = fullpath.substring(this.base_directory.length);
+    result.filename = path.basename(fullpath);
 
     fs.stat(fullpath, function (err, stat) {
         if (err) {
@@ -53,6 +54,7 @@ Watcher.prototype.getBaseFileInfo = function (fullpath, cb) {
     var result = {};
     result.fullpath = fullpath;
     result.relpath = fullpath.substring(this.base_directory.length);
+    result.filename = path.basename(fullpath);
     result.site = 0;
     result.lastModified = 0;
 
