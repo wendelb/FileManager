@@ -73,7 +73,6 @@ Watcher.prototype.add_Watch = function (directory) {
             return;
         }
 
-
         if (mask & Inotify.IN_CLOSE_WRITE) {
             // A file has changed
             debug("File opened was closed: " + fullpath);
@@ -126,7 +125,6 @@ Watcher.prototype.add_Watch = function (directory) {
     watch_fd = inotify.addWatch(watch);
 
     this.hashtable[watch_fd] = directory;
-    //console.log(this.hashtable);
     return watch_fd;
 };
 
