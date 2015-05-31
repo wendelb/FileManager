@@ -10,7 +10,7 @@
 fd.logging = false;
 fd.jQuery();
 
-angular.module('filemanager', ['angular-humanize'])
+angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
 .config(function () {
 })
 .factory('socket', function ($rootScope) {
@@ -36,7 +36,10 @@ angular.module('filemanager', ['angular-humanize'])
         }
     };
 })
-.directive('folderTree', function ($compile) {
+.factory('uploader', function () {
+
+})
+.directive('folderTree', function ($compile, uploader) {
     return {
         restrict: 'EA',
         scope: {
@@ -80,7 +83,13 @@ angular.module('filemanager', ['angular-humanize'])
             element.find("td > table .upload-zone > td").filedrop()
             // jQuery always passes event object as the first argument.
             .on('fdsend', function (e, files) {
-                files.invoke('sendTo', 'upload?path=' + scope.folder.path);
+                files.each(function (file) {
+                    uploader.add(file, scope.folder.path);
+
+                    // Start the upload
+                    file.sendTo('upload?path=' + scope.folder.path);
+                });
+
             })
             .on('filedone', function (e, file) {
                 // alert('Done uploading ' + file.name + ' on ' + scope.folder.path);
@@ -117,4 +126,7 @@ angular.module('filemanager', ['angular-humanize'])
     socket.on('file:changed', function (fileinfo) {
         $scope.rootFolder.addFileFullName(fileinfo);
     });
+})
+.controller('UploadController', function () {
+
 });
