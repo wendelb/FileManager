@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+/* global unescape: false */
 var fs = require("fs"),
     path = require("path");
 

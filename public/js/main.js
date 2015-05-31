@@ -1,5 +1,11 @@
 'use strict';
 
+// JSHint globale Variablen setzen
+/* global fd: false */
+/* global angular: false */
+/* global io: false */
+/* global Folder: false */
+
 // Filedrop in den jQuery-Modus umschalten
 fd.logging = false;
 fd.jQuery();
@@ -26,7 +32,7 @@ angular.module('filemanager', ['angular-humanize'])
                         callback.apply(socket, args);
                     }
                 });
-            })
+            });
         }
     };
 })
@@ -52,7 +58,7 @@ angular.module('filemanager', ['angular-humanize'])
                 '<tr class="file" ng-repeat="item in folder.files | orderBy:\'filename\'"><td>{{item.filename}}</td><td>{{item.size | humanizeFilesize}}</td><td>{{item.lastModified | date:\'dd.MM.yyyy HH:mm\'}}</td></tr>' +
                 '</table></td>';
 
-            //Rendering template.
+            // Rendering template.
             element.html('').append($compile(template)(scope));
 
             // Get the dropzone
@@ -74,10 +80,10 @@ angular.module('filemanager', ['angular-humanize'])
             element.find("td > table .upload-zone > td").filedrop()
             // jQuery always passes event object as the first argument.
             .on('fdsend', function (e, files) {
-                files.invoke('sendTo', 'upload?path=' + scope.folder.path)
+                files.invoke('sendTo', 'upload?path=' + scope.folder.path);
             })
             .on('filedone', function (e, file) {
-                alert('Done uploading ' + file.name + ' on ' + scope.folder.path)
+                // alert('Done uploading ' + file.name + ' on ' + scope.folder.path);
             });
         }
     };
@@ -88,7 +94,7 @@ angular.module('filemanager', ['angular-humanize'])
 
     socket.on('connect', function () {
         socket.emit("init");
-    })
+    });
 
     socket.on('file:new', function (fileinfo) {
         $scope.rootFolder.addFileFullName(fileinfo);
@@ -111,5 +117,4 @@ angular.module('filemanager', ['angular-humanize'])
     socket.on('file:changed', function (fileinfo) {
         $scope.rootFolder.addFileFullName(fileinfo);
     });
-})
-
+});
