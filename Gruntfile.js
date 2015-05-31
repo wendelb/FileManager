@@ -12,13 +12,13 @@ module.exports = function (grunt) {
 
         // JS-Development
         jshint: {
-            allFiles: ['*.js', 'routes/*.js'],
+            allFiles: ['*.js', 'routes/*.js', 'public/js/*.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
         },
         jscs: {
-            src: ['*.js', 'routes/*.js'],
+            src: ['*.js', 'routes/*.js', 'public/js/*.js'],
             options: {
                 config: '.jscsrc'
             }
