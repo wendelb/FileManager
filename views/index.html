@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FileManager</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- jQuery -->
+    <script src="/components/jquery/dist/jquery.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css" />
+    <script src="/components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- File Folder Structure -->
+    <script src="/js/folder.js"></script>
+
+    <!-- angular -->
+    <script src="/components/angular/angular.js"></script>
+
+    <!-- Angular Bootstrap -->
+    <script src="/components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <!-- Angular Humanize -->
+    <script src="/components/humanize/humanize.js"></script>
+    <script src="/components/angularjs-humanize/src/angular-humanize.js"></script>
+
+    <!-- Filedrop -->
+    <link rel="stylesheet" href="/components/filedrop/filedrop.css" />
+    <script src="/components/filedrop/filedrop.js"></script>
+
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Main -->
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body ng-app="filemanager">
+    <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="container" ng-controller="MainCtrl">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr folder-tree ng-repeat="item in rootFolder.subfolders" folder="item"></tr>
+
+                <tr ng-repeat="item in rootFolder.files | orderBy:'filename'">
+                    <td>{{item.filename}}</td>
+                    <td>{{item.size | humanizeFilesize}}</td>
+                    <td>{{item.lastModified | date:'dd.MM.yyyy HH:mm'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
