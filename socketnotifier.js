@@ -6,7 +6,7 @@ var Watcher = require("./file-notifier"),
     path = require("path");
 
 function notifier(io) {
-    var watchdog = new Watcher("/tmp");
+    var watchdog = new Watcher("/tmp/");
     watchdog.init();
 
     io.on('connection', function (socket) {
@@ -16,7 +16,7 @@ function notifier(io) {
             // Run the init process
             var folders = watchdog.list();
 
-            for (var i in folders) {
+            for (var i in folders) { // jshint loopfunc: true
                 if (folders.hasOwnProperty(i)) {
                     watchdog.getBaseFileInfo(folders[i], function (err, result) {
                         socket.emit('folder:new', result);
