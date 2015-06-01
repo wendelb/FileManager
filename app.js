@@ -8,6 +8,8 @@ var http = require("http"),
     bodyParser = require('body-parser'),
     multer = require("multer"),
     sio = require('socket.io'),
+    serveStatic = require("serve-static"),
+    contentDisposition = require('content-disposition'),
     routes = require('./routes/index'),
     uploadHandler = require('./routes/upload'),
     socketNotifier = require("./socketnotifier"),
@@ -29,6 +31,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 app.post('/upload', uploadHandler);
+
+// Set header to force download
+function setHeaders(res, path) {
+    res.setHeader('Content-Disposition', contentDisposition(path))
+}
+
+app.use('/download', serveStatic('/tmp', {
+    dotfiles: 'allow',
+    index: false,
+    setHeaders: setHeaders
+}));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
