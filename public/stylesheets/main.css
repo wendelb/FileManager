@@ -2,3 +2,7 @@
     border: 2px dashed #0094ff;
     background-color: #91c3e6;
 }
+
+.file, .folder {
+    cursor: pointer;
+}
