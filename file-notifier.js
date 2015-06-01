@@ -21,7 +21,6 @@ util.inherits(Watcher, EventEmitter);
 
 Watcher.prototype.init = function () {
     this.add_Watch(this.base_directory);
-    console.log(this);
 
     var folders = this.scandirSync(this.base_directory);
     if (folders.length !== 0) {
