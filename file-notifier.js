@@ -133,7 +133,7 @@ Watcher.prototype.scandirSync = function (directory) {
 
     for (var i in files) {
         if (files.hasOwnProperty(i)) {
-            if (files[i][0] !== ':') {
+            if (files[i][0] !== '.') {
                 var name = path.normalize(path.join(directory, files[i]));
                 try {
                     if (fs.statSync(name).isDirectory()) {
