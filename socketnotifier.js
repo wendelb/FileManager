@@ -3,7 +3,8 @@
 var Watcher = require("./file-notifier"),
     debug = require("debug")("FileManager:Socket"),
     fs = require("fs"),
-    path = require("path");
+    path = require("path"),
+    excludeRegex = /^(sh\-thd\-(.*)|\.)/;
 
 function notifier(io) {
     var watchdog = new Watcher(process.argv[2]);
@@ -28,13 +29,15 @@ function notifier(io) {
                         // Now iterate over all entries
                         for (var x = 0; x < files.length; x++) {
 
-                            // Is this a file or a folder?
-                            var data = fs.statSync(path.join(folders[i], files[x]));
-                            if (!data.isDirectory()) {
-                                // and send!
-                                watchdog.getFileInfo(path.join(folders[i], files[x]), function (err, result2) {
-                                    socket.emit("file:new", result2);
-                                });
+                            if (!excludeRegex.test(files[x])) {
+                                // Is this a file or a folder?
+                                var data = fs.statSync(path.join(folders[i], files[x]));
+                                if (!data.isDirectory()) {
+                                    // and send!
+                                    watchdog.getFileInfo(path.join(folders[i], files[x]), function (err, result2) {
+                                        socket.emit("file:new", result2);
+                                    });
+                                }
                             }
                         }
                     });

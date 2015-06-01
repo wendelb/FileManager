@@ -133,15 +133,17 @@ Watcher.prototype.scandirSync = function (directory) {
 
     for (var i in files) {
         if (files.hasOwnProperty(i)) {
-            var name = path.normalize(path.join(directory, files[i]));
-            try {
-                if (fs.statSync(name).isDirectory()) {
-                    debug_scan("Found folder: " + name);
-                    directories.push(name);
-                    directories = directories.concat(this.scandirSync(name));
+            if (files[i][0] !== ':') {
+                var name = path.normalize(path.join(directory, files[i]));
+                try {
+                    if (fs.statSync(name).isDirectory()) {
+                        debug_scan("Found folder: " + name);
+                        directories.push(name);
+                        directories = directories.concat(this.scandirSync(name));
+                    }
                 }
+                catch (e) { }
             }
-            catch(e) {}
         }
     }
 
