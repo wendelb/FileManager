@@ -47,7 +47,7 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
         });
 
         // On Progress
-        file.event('progress', function (current, total) {
+        file.event('progress', function (current) { // total
             this.progress = current;
             self.scope.$apply();
         });
@@ -56,9 +56,9 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
         file.event('done', function () {
             this.progress = this.size;
 
-            // Nach Abschluss wieder löschen
+            // Nach Abschluss wieder lÃ¶schen
             for (var i = 0; i < self.uploads.length; i++) {
-                if (self.uploads[i] == this) {
+                if (self.uploads[i] === this) {
                     self.uploads.splice(i, 1);
                     self.scope.$apply();
                     return;
@@ -77,7 +77,7 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
         scope: {
             folder: "="
         },
-        link: function (scope, element, attrs) {
+        link: function (scope, element) { // attrs
             var dropzone, droptimer = false;
 
             scope.expanded = false;
@@ -110,7 +110,7 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
                     clearTimeout(droptimer);
                 }
             })
-            .on('dragleave', function (e) {
+            .on('dragleave', function () {
                 droptimer = setTimeout(function () {
                     dropzone.hide();
                 }, 2000);
