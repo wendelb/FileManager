@@ -36,8 +36,40 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
         }
     };
 })
-.factory('uploader', function () {
+.service('uploader', function () {
+    var self = this;
+    this.uploads = [];
+    this.scope = null;
+    this.add = (function (file) {
+        // XHR startet
+        file.event('sendXHR', function () {
+            this.progress = 0;
+        });
 
+        // On Progress
+        file.event('progress', function (current, total) {
+            this.progress = current;
+            self.scope.$apply();
+        });
+
+        // On Finished
+        file.event('done', function () {
+            this.progress = this.size;
+
+            // Nach Abschluss wieder löschen
+            for (var i = 0; i < self.uploads.length; i++) {
+                if (self.uploads[i] == this) {
+                    self.uploads.splice(i, 1);
+                    self.scope.$apply();
+                    return;
+                }
+            }
+        });
+
+        file.progress = 0;
+
+        this.uploads.push(file);
+    });
 })
 .directive('folderTree', function ($compile, uploader) {
     return {
@@ -90,9 +122,6 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
                     file.sendTo('upload?path=' + scope.folder.path);
                 });
 
-            })
-            .on('filedone', function (e, file) {
-                // alert('Done uploading ' + file.name + ' on ' + scope.folder.path);
             });
         }
     };
@@ -127,6 +156,7 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
         $scope.rootFolder.addFileFullName(fileinfo);
     });
 })
-.controller('UploadController', function () {
-
+.controller('UploadController', function ($scope, uploader) {
+    uploader.scope = $scope;
+    $scope.uploader = uploader;
 });

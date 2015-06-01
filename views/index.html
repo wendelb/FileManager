@@ -65,8 +65,14 @@
         </div>
 
         <div class="row" ng-controller="UploadController">
-            <h2>Uploads</h2>
-            <progressbar class="progress-striped active" value="22" type="info">22%</progressbar>
+            <h2 ng-show="uploader.uploads.length > 0">Uploads</h2>
+            <ul>
+                <li ng-repeat="item in uploader.uploads">{{item.name}}: {{item.progress | humanizeFilesize}} / {{item.size | humanizeFilesize}}</li>
+            </ul>
+
+
+            <!--<progressbar class="progress-striped active" value="{ {item.progress / item.size * 100}}}" type="info">20%</progressbar>  -->
+            <!-- s / item.size * 100-->
         </div>
     </div>
 </body>
