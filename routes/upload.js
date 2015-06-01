@@ -15,7 +15,7 @@ function uploadHandler(req, res) {
         return;
     }
 
-    var folder = path.join("/tmp", unescape(req.query.path.substring(1))),
+    var folder = path.join(process.argv[2], unescape(req.query.path.substring(1))),
         filename = unescape(req.header('X-File-Name'));
 
     console.log(folder);
