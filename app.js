@@ -36,7 +36,7 @@ function setHeaders(res, path) {
 }
 
 app.use('/download', serveStatic(process.argv[2], {
-    dotfiles: 'allow',
+    dotfiles: 'deny',
     index: false,
     setHeaders: setHeaders
 }));
