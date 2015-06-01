@@ -37,7 +37,7 @@ function setHeaders(res, path) {
     res.setHeader('Content-Disposition', contentDisposition(path));
 }
 
-app.use('/download', serveStatic('/tmp', {
+app.use('/download', serveStatic(process.argv[2], {
     dotfiles: 'allow',
     index: false,
     setHeaders: setHeaders

@@ -6,7 +6,7 @@ var Watcher = require("./file-notifier"),
     path = require("path");
 
 function notifier(io) {
-    var watchdog = new Watcher("/tmp/");
+    var watchdog = new Watcher(process.argv[2]);
     watchdog.init();
 
     io.on('connection', function (socket) {
