@@ -6,7 +6,6 @@ var http = require("http"),
 // var favicon = require('serve-favicon'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
-    multer = require("multer"),
     sio = require('socket.io'),
     serveStatic = require("serve-static"),
     contentDisposition = require('content-disposition'),
@@ -25,7 +24,6 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.raw({ limit: '50mb' }));
-app.use(multer({ dest: './uploads/' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
