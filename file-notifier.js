@@ -8,7 +8,7 @@ var EventEmitter = require("events").EventEmitter,
     fs = require("fs"),
     debug = require("debug")("FileManager:FileNotifier"),
     debug_scan = require("debug")("FileManager:FileNotifier:scandir"),
-    excludeRegex = /^sh\-thd\-(.*)/;
+    excludeRegex = /^(sh\-thd\-(.*)|\.cache)/;
 
 function Watcher(base_directory) {
     this.base_directory = path.normalize(base_directory);
