@@ -3,7 +3,7 @@
 var http = require("http"),
     express = require('express'),
     path = require('path'),
-// var favicon = require('serve-favicon'),
+    favicon = require('serve-favicon'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
     sio = require('socket.io'),
@@ -19,8 +19,8 @@ var http = require("http"),
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+// WebApp Stack
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.raw({ limit: '50mb' }));
