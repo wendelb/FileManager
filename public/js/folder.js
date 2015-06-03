@@ -5,6 +5,7 @@ function Folder(name, path) {
     this.subfolders = [];
     this.files = [];
     this.path = path;
+    this.isRoot = (name == '');
 }
 
 Folder.prototype.addFile = function (file) {

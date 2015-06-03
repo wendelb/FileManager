@@ -90,12 +90,24 @@ angular.module('filemanager', ['angular-humanize', 'ui.bootstrap'])
                 window.open('/download/' + file.relpath);
             };
 
-            var template = '<td colspan="3"><span ng-hide="expanded" class="glyphicon glyphicon-chevron-right"></span><span ng-show="expanded" class="glyphicon glyphicon-chevron-down"></span><span ng-click="toggle()">{{folder.name}}</span>' +
-                '<table ng-show="expanded" class="table table-striped table-hover">' +
-                '<tr class="upload-zone" style="display: none;"><td colspan="3"><div>Upload here...</div></td></tr>' +
-                '<tr class="folder" folder-tree ng-repeat="item in folder.subfolders | orderBy:\'name\'" folder="item"></ng-sparkline>' +
-                '<tr class="file" ng-repeat="item in folder.files | orderBy:\'filename\'"><td ng-dblclick="download(item)">{{item.filename}}</td><td>{{item.size | humanizeFilesize}}</td><td>{{item.lastModified | date:\'dd.MM.yyyy HH:mm\'}}</td></tr>' +
-                '</table></td>';
+            var template = '<td colspan="3">' +
+                '<div ng-if="!folder.isRoot">' +
+                '<span ng-hide="expanded" class="glyphicon glyphicon-chevron-right"></span>' +
+                '<span ng-show="expanded" class="glyphicon glyphicon-chevron-down"></span>' +
+                '<span ng-click="toggle()">{{folder.name}}</span>' +
+                '</div>' +
+                '<table ng-show="expanded || folder.isRoot" class="table table-striped table-hover">' +
+                '<tr class="upload-zone" style="display: none;">' +
+                '<td colspan="3"><div>Upload here...</div></td>' +
+                '</tr>' +
+                '<tr class="folder" folder-tree ng-repeat="item in folder.subfolders | orderBy:\'name\'" folder="item"></tr>' +
+                '<tr class="file" ng-repeat="item in folder.files | orderBy:\'filename\'">' +
+                '<td ng-dblclick="download(item)">{{item.filename}}</td>' +
+                '<td>{{item.size | humanizeFilesize}}</td>' +
+                '<td>{{item.lastModified | date:\'dd.MM.yyyy HH:mm\'}}</td>' +
+                '</tr>' +
+                '</table>' +
+                '</td>';
 
             // Rendering template.
             element.html('').append($compile(template)(scope));

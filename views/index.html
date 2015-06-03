@@ -53,13 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="folder" folder-tree ng-repeat="item in rootFolder.subfolders" folder="item"></tr>
-
-                    <tr class="file" ng-repeat="item in rootFolder.files | orderBy:'filename'">
-                        <td>{{item.filename}}</td>
-                        <td>{{item.size | humanizeFilesize}}</td>
-                        <td>{{item.lastModified | date:'dd.MM.yyyy HH:mm'}}</td>
-                    </tr>
+                    <tr class="folder" folder-tree folder="rootFolder"></tr>
                 </tbody>
             </table>
         </div>
