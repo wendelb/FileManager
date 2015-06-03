@@ -9,7 +9,7 @@ function uploadHandler(req, res) {
     if (
         (!req.is('application/octet-stream')) ||
         (req.header('X-Requested-With') !== "FileDrop-XHR-FileAPI") ||
-        (!req.query.path)
+        (typeof req.query.path == 'undefined')
     ) {
         res.status(404).send("Not found");
         return;
@@ -18,7 +18,9 @@ function uploadHandler(req, res) {
     var folder = path.join(process.argv[2], unescape(req.query.path.substring(1))),
         filename = unescape(req.header('X-File-Name'));
 
-    console.log(folder);
+    console.log("Folder", "Filename");
+    console.log(folder, filename);
+
     // Existiert der Pfad?
     fs.stat(folder, function (err, stat) {
         if (err) {
